@@ -1,0 +1,6 @@
+Parser/.vs/*
+Parser/UnitTests/bin/*
+Parser/UnitTests/obj/*
+Parser/Parser/bin/*
+Parser/Parser/obj/*
+
