@@ -1,10 +1,11 @@
 ﻿using System;
 namespace Parser.Exceptions
 {
-    public class NegativeNumberException
+    public class NegativeNumberException : Exception
     {
-        public NegativeNumberException()
+        public NegativeNumberException(string message) : base(message)
         {
-        }
-    }
+
+		}
+	}
 }

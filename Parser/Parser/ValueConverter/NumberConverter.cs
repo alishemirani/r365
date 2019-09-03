@@ -3,12 +3,14 @@ namespace Parser.ValueConverter
 {
     public class NumberConverter : IValueConverter
     {
-        public bool CanConvert(string value)
+        public virtual int Order => 1;
+
+        public virtual bool CanConvert(string value)
         {
             return int.TryParse(value, out _);
         }
 
-        public int GetValue(string value)
+        public virtual int GetValue(string value)
         {
             return int.Parse(value);
         }

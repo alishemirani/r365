@@ -3,6 +3,8 @@ namespace Parser.ValueConverter
 {
     public class InvalidNumberConverter : IValueConverter
     {
+        public int Order => 3;
+
         public bool CanConvert(string value)
         {
             return !int.TryParse(value, out _);

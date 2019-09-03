@@ -1,10 +1,8 @@
 ﻿using System;
 namespace Parser.ValueConverter
 {
-    public class IProcessingStrategyAware
+    public interface IProcessingStrategyAware
     {
-        public IProcessingStrategyAware()
-        {
-        }
+        ProcessingStrategy Strategy { get; }
     }
 }

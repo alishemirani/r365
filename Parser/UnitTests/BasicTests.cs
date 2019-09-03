@@ -5,7 +5,7 @@ using Parser.ValueConverter;
 
 namespace Tests
 {
-    public class Tests
+    public class BasicTests
     {
         private IParser parser;
 
@@ -53,6 +53,13 @@ namespace Tests
         {
             int result = parser.calculateExpression("5,6,4");
             Assert.AreEqual(15, result);
+        }
+
+        [Test]
+        public void TestExpression_EmptyExpression()
+        {
+            int result = parser.calculateExpression("");
+            Assert.AreEqual(0, result);
         }
     }
 }
