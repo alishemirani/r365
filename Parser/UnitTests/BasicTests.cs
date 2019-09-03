@@ -17,7 +17,7 @@ namespace Tests
                 new NumberConverter(),
                 new InvalidNumberConverter()
             };
-            parser = new SimpleAdditionParser(',', valueConverters);
+            parser = new SimpleAdditionParser(new List<char> { ',' }, valueConverters);
         }
 
         [Test]
@@ -46,6 +46,13 @@ namespace Tests
         {
             int result = parser.calculateExpression("5,");
             Assert.AreEqual(5, result);
+        }
+
+        [Test]
+        public void TestExpression_MultipleNumbers()
+        {
+            int result = parser.calculateExpression("5,6,4");
+            Assert.AreEqual(15, result);
         }
     }
 }
