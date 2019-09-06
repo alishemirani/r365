@@ -30,7 +30,7 @@ namespace Parser
         protected RegexParser(string regexPattern, List<IValueConverter> converters, List<IValueProcessor> processors, string alternativeDelimiter)
         {
             this.alternativeDelimiter = alternativeDelimiter;
-            this.regex = new Regex(regexPattern);
+            this.regex = new Regex(regexPattern, RegexOptions.ExplicitCapture);
             this.valueProcessors = processors;
             this.converters = converters;
         }
@@ -47,8 +47,8 @@ namespace Parser
             if (regex != null && regex.IsMatch(expression))
             {
                 var match = regex.Match(expression);
-                var delims = match.Groups.Where(t => t.Name.StartsWith("delimiter", StringComparison.InvariantCultureIgnoreCase))
-                    .Select(t => t.Value)
+                var delims = match.Groups.Where(t => t.Name.Equals("delimiter", StringComparison.InvariantCultureIgnoreCase))
+                    .SelectMany(t => t.Captures.Select(m=>m.Value))
                     .ToList();
 
                 delimiters.AddRange(delims);

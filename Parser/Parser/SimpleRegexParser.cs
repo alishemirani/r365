@@ -17,7 +17,7 @@ namespace Parser
         private static string GetRegex(string alternativeDelimiter)
         {
             string delim = string.IsNullOrEmpty(alternativeDelimiter) ? "\n" : alternativeDelimiter;
-            return $"//(?<delimiter>(.)){delim}(?<numbers>(.*))";
+            return $"//(?<delimiter>(\\D)){delim}(?<numbers>(.*))";
         }
     }
 }
