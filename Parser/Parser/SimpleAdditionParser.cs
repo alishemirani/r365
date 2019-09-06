@@ -8,22 +8,34 @@ namespace Parser
 {
     public class SimpleAdditionParser : IParser
     {
-        private readonly List<char> delimiters;
+        private readonly List<string> delimiters;
         private readonly List<IValueConverter> converters;
         private readonly List<IValueProcessor> valueProcessors;
 
-        public SimpleAdditionParser(List<char> delimiters, List<IValueConverter> converters) : this(delimiters, converters, new List<IValueProcessor>()) { }
+        public SimpleAdditionParser(List<IValueConverter> converters) : this(converters, new List<string>()) { }
 
-        public SimpleAdditionParser(List<char> delimiters, List<IValueConverter> converters, List<IValueProcessor> processors)
+        public SimpleAdditionParser(List<IValueConverter> converters, string alternativeDelimiter) : this(converters, new List<string> { alternativeDelimiter }) { }
+
+        public SimpleAdditionParser(List<IValueConverter> converters, List<string> alternativeDelimiter) : this(converters, new List<IValueProcessor>(), alternativeDelimiter) { }
+
+        public SimpleAdditionParser(List<IValueConverter> converters, List<IValueProcessor> processors, string alternativeDelimiter) :
+            this(converters, processors, new List<string> { alternativeDelimiter })
+        { }
+
+        public SimpleAdditionParser(List<IValueConverter> converters, List<IValueProcessor> processors):
+            this(converters, processors, new List<string>()) { }
+
+        public SimpleAdditionParser(List<IValueConverter> converters, List<IValueProcessor> processors, List<string> alternativeDelimiter) 
         {
-            this.delimiters = delimiters;
+            this.delimiters = new List<string> { "," };
+            if (alternativeDelimiter != null)
+                delimiters.AddRange(alternativeDelimiter);
             this.converters = converters;
-            this.converters.Sort((a, b) => a.Order.CompareTo(b.Order));
+            this.converters.Sort((a, b) => b.Order.CompareTo(a.Order));
             this.valueProcessors = processors;
         }
 
-
-        public int calculateExpression(string expression)
+        public int CalculateExpression(string expression)
         {
             var tokens = GetTokens(expression);
             var exceptionMessages = "";
@@ -51,24 +63,14 @@ namespace Parser
                         .Sum();
         }
 
-
-
         private List<string> GetTokens(string expression)
         {
-            List<string> tokens = new List<string>();
-            var prevIndex = 0;
-            var index = expression.IndexOfAny(delimiters.ToArray());
-            while (index >= 0)
-            {
-                tokens.Add(expression.Substring(prevIndex, index - prevIndex));
-                prevIndex = index + 1;
-                index = expression.IndexOfAny(delimiters.ToArray(), prevIndex);
-            }
-            if (prevIndex < expression.Length)
-            {
-                tokens.Add(expression.Substring(prevIndex, expression.Length - prevIndex));
-            }
-            return tokens;
+            return expression.Split(delimiters.ToArray(), StringSplitOptions.None).ToList();
+        }
+
+        public bool CanParse(string expression)
+        {
+            return true;
         }
     }
 }

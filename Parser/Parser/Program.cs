@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Parser
 {
@@ -6,7 +7,8 @@ namespace Parser
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string input = Regex.Unescape(Console.ReadLine());
+            var b = false;
         }
     }
 }

@@ -16,5 +16,8 @@
     <Compile Remove="ValueConverter\IEachValueConverter.cs" />
     <Compile Remove="ValueConverter\NegativeNumberConverter.cs" />
     <Compile Remove="ValueConverter\IFirstValueConverter.cs" />
+    <Compile Remove="FormatParser.cs" />
+    <Compile Remove="ValueConverter\IOrderedValueConverter.cs" />
+    <Compile Remove="Exceptions\ExpressionNotSupportedException.cs" />
   </ItemGroup>
 </Project>

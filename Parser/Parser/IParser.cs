@@ -3,6 +3,7 @@ namespace Parser
 {
     public interface IParser
     {
-        int calculateExpression(string expression);
+        bool CanParse(string expression);
+        int CalculateExpression(string expression);
     }
 }

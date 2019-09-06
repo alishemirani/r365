@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Parser;
 using Parser.Exceptions;
@@ -25,9 +26,8 @@ namespace UnitTests
                 new NegativeNumberValueProcessor()
             };
             parser = new SimpleAdditionParser(
-                new List<char> { ',', '\n' },
                 valueConverters,
-                valueProcessors);
+                valueProcessors, Regex.Unescape("\n"));
         }
 
         [Test]
@@ -35,8 +35,8 @@ namespace UnitTests
         {
             Assert.Throws<Exception>(delegate
                 {
-                    parser.calculateExpression("-4\n-2\n3");
-                }, "invalid negative numbers - 4, -2\n");
+                    parser.CalculateExpression(Regex.Unescape("-4\n-2\n3"));
+                }, "invalid negative numbers -4, -2\n");
         }
     }
 }
