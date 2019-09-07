@@ -18,7 +18,7 @@ namespace Tests
                 new NumberConverter(),
                 new InvalidNumberConverter()
             };
-            parser = new SimpleAdditionParser(valueConverters);
+            parser = new SimpleOperationParser(valueConverters);
         }
 
         [Test]

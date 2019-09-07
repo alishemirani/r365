@@ -25,7 +25,7 @@ namespace UnitTests
             {
                 new NegativeNumberValueProcessor()
             };
-            parser = new SimpleAdditionParser(
+            parser = new SimpleOperationParser(
                 valueConverters,
                 valueProcessors, Regex.Unescape("\n"));
         }

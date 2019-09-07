@@ -14,6 +14,7 @@ namespace Parser
         private readonly List<IValueConverter> converters;
         private readonly List<IValueProcessor> valueProcessors;
         private readonly string alternativeDelimiter;
+        private readonly Operation operation;
 
         protected RegexParser(string regexPattern, string alternativeDelimiter) : this(regexPattern,
             new List<IValueConverter>
@@ -24,15 +25,16 @@ namespace Parser
             }, new List<IValueProcessor>
             {
                 new NegativeNumberValueProcessor()
-            }, alternativeDelimiter)
+            }, alternativeDelimiter, Operation.Add)
         { }
 
-        protected RegexParser(string regexPattern, List<IValueConverter> converters, List<IValueProcessor> processors, string alternativeDelimiter)
+        protected RegexParser(string regexPattern, List<IValueConverter> converters, List<IValueProcessor> processors, string alternativeDelimiter, Operation operation)
         {
             this.alternativeDelimiter = alternativeDelimiter;
             this.regex = new Regex(regexPattern, RegexOptions.ExplicitCapture);
             this.valueProcessors = processors;
             this.converters = converters;
+            this.operation = operation;
         }
 
 
@@ -53,12 +55,12 @@ namespace Parser
 
                 delimiters.AddRange(delims);
 
-                additionParser = new SimpleAdditionParser(converters, valueProcessors, delimiters);
+                additionParser = new SimpleOperationParser(converters, valueProcessors, delimiters, operation);
                 exp = match.Groups["numbers"].Value;
             }
             else
             {
-                additionParser = new SimpleAdditionParser(converters, valueProcessors, delimiters);
+                additionParser = new SimpleOperationParser(converters, valueProcessors, delimiters, operation);
             }
 
             return additionParser.CalculateExpression(exp);

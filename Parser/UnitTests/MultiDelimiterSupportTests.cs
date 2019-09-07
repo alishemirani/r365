@@ -20,7 +20,7 @@ namespace UnitTests
                 new InvalidNumberConverter(),
                 new MaximumNumberConverter(1000)
             };
-            parser = new SimpleAdditionParser(valueConverters, Regex.Unescape("\n"));
+            parser = new SimpleOperationParser(valueConverters, Regex.Unescape("\n"));
         }
 
         [Test]
